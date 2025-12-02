@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "s3-manager"
+version = "0.1.0"
+description = "Simple S3 manager with connection checks and sync utilities."
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [
+  { include = "s3_manager", from = "src" }
+]
+
+[tool.poetry.dependencies]
+# Target Python 3.13
+python = ">=3.13,<3.14"
+
+# S3 & AWS SDK
+boto3 = "^1.35.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.0.0"
+isort = "^5.13.0"
+mypy = "^1.10.0"
+pytest = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
