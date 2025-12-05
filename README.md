@@ -116,3 +116,49 @@ Your first image should appear shortly!
 ## Questions?
 
 Open an issue or reach out via GitHub!
+
+## NEW
+
+1. Updated sd_monitor.py
+
+Changes vs your original:
+
+Reads settings.json from these locations (first found wins):
+
+/etc/epaper_frame/settings.json
+
+~/.config/epaper_frame/settings.json
+
+settings.json next to the scripts
+
+Uses change_interval_minutes from settings for refresh time (fallback to refresh_time.txt on SD, then 600s).
+
+Uses stop_rotation_between to pause/stop frame_manager.py during quiet hours, so the display keeps the last image (no updates between times).
+
+2. New frame_manager.py (using your original structure)
+
+Goals implemented here:
+
+Keeps your structure with ImageConverter and DisplayManager.
+
+Uses settings.json to:
+
+Decide which SD card images to process based on picture_mode and s3_folder.
+
+"both" → all files on the SD card
+
+"local" → all files except in <sd_root>/<s3_folder>/
+
+"online" → only files in <sd_root>/<s3_folder>/
+
+Keeps a boot picture separated from the rotation:
+
+Boot picture is shown via display_manager.display_message('start.jpg') (like before).
+
+Rotation uses only the converted SD images (from ImageConverter into PIC_PATH), so the boot picture is not part of the rotation.
+
+You can use any placeholder text image as start.jpg inside whatever location DisplayManager uses for that.
+
+To enforce local / online / both without touching ImageConverter, we:
+
+Optionally build a temporary filtered copy of the SD contents (excluding s3_folder) for picture_mode="local".
