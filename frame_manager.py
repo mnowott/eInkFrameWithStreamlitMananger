@@ -53,6 +53,7 @@ def build_local_only_source(sd_path: str, s3_folder_name: str) -> str:
     Build a temporary directory that mirrors sd_path but EXCLUDES the s3_folder subtree.
     Returns the path to the filtered directory.
     """
+    s3_folder_name = "s3_folder"
     sd_path = os.path.abspath(sd_path)
     s3_full = os.path.join(sd_path, s3_folder_name)
     s3_full = os.path.abspath(s3_full)
